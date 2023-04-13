@@ -1,0 +1,15 @@
+{
+"pMoviApliOrig": "1",
+"pMoviCias": "GL199",
+"pMoviCiasOrig": "GL199",
+"pMoviOficina": 1,
+"pMoviNumero": "2148586",
+"pMoviOrpaVigencia": 0,
+"pMoviAuxiliar": "10003396",
+"pMoviFpag": "CSH",
+"pMoviDescripcion":  "Enc 8643ADICION COLPATRIA AHORROS  2148586",
+"pMoviUsuaCrea": "FLEXIFON",
+"pMoviFecha": "2013-04-04",
+"pMoviCuenta": "111505019",
+"pMoviValor": 4000000
+}

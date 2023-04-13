@@ -1,0 +1,118 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: sodimac-java
+metadata:
+  annotations:
+    description: Apache Camel for Sodimac.
+    iconClass: icon-rh-integration
+    openshift.io/display-name: Sodimac Development with Apache Camel
+    openshift.io/provider-display-name: Sodimac.
+    tags: ApacheCamel
+    version: "1"
+  name: sodimac-camel
+  namespace: #{System.ProjectDev}#
+objects:
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      annotations:
+        app.openshift.io/vcs-ref: #{BRANCH_DEV}#
+        app.openshift.io/vcs-uri: #{System.Repo}#
+      generation: 3
+      labels:
+        app: #{System.ServiceName}#
+        app.kubernetes.io/component: #{System.ServiceName}#
+        app.kubernetes.io/instance: #{System.ServiceName}#
+        app.kubernetes.io/part-of: #{System.Application}#
+      name: #{System.ServiceName}#
+      namespace: #{System.ProjectDev}#
+    spec:
+      replicas: 1
+      selector:
+        app: #{System.ServiceName}#
+        deploymentconfig: #{System.ServiceName}#
+      strategy:
+        activeDeadlineSeconds: 21600
+        resources: {}
+        rollingParams:
+          intervalSeconds: 1
+          maxSurge: 25%
+          maxUnavailable: 25%
+          timeoutSeconds: 120
+          updatePeriodSeconds: 1
+        type: Rolling
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            app: #{System.ServiceName}#
+            deploymentconfig: #{System.ServiceName}#
+        spec:
+          containers:
+            - image: image-registry.openshift-image-registry.svc:5000/#{System.ProjectDev}#/#{System.ServiceName}#:#{Build.BuildId}#
+              env:
+                - name: DB_HCTLC_HOST
+                  value: '#{DB_HCTLC_HOST}#'
+              imagePullPolicy: Always
+              name: #{System.ServiceName}#
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+      test: false
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        app.openshift.io/vcs-ref: #{BRANCH_DEV}#
+        app.openshift.io/vcs-uri: #{System.Repo}#
+      labels:
+        app: #{System.ServiceName}#
+        app.kubernetes.io/component: #{System.ServiceName}#
+        app.kubernetes.io/instance: #{System.ServiceName}#
+        app.kubernetes.io/part-of: #{System.ServiceName}#
+      name: #{System.ServiceName}#
+      namespace: #{System.ProjectDev}#
+    spec:
+      ports:
+        - name: 8080-tcp
+          port: 8080
+          protocol: TCP
+          targetPort: 8080
+      selector:
+        app: #{System.ServiceName}#
+        deploymentconfig: #{System.ServiceName}#
+      sessionAffinity: None
+      type: ClusterIP
+  - apiVersion: v1
+    kind: Route
+    metadata:
+      annotations:
+        app.openshift.io/vcs-ref: #{BRANCH_DEV}#
+        app.openshift.io/vcs-uri: #{System.Repo}#
+        openshift.io/host.generated: "true"
+        haproxy.router.openshift.io/timeout: 300000ms
+      labels:
+        app: #{System.ServiceName}#
+        app.kubernetes.io/component: #{System.ServiceName}#
+        app.kubernetes.io/instance: #{System.ServiceName}#
+        app.kubernetes.io/part-of: #{System.ServiceName}#
+      name: #{System.ServiceName}#
+      namespace: #{System.ProjectDev}#
+    spec:
+      host: #{System.ServiceName}#-#{System.ProjectDev}#.apps.openshiftqa.sodimacpr.corp
+      port:
+        targetPort: 8080-tcp
+      subdomain: ""
+      to:
+        kind: Service
+        name: #{System.ServiceName}#
+        weight: 100
+      tls:
+        termination: edge
+      wildcardPolicy: None

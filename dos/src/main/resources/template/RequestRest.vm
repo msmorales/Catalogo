@@ -1,0 +1,15 @@
+{
+"pMoviApliOrig":"#if(${exchange.properties.pMoviApliOrig})${exchange.properties.pMoviApliOrig}#end",
+"pMoviCias": "#if(${exchange.properties.pMoviCias})${exchange.properties.pMoviCias}#end",
+"pMoviCiasOrig":"#if(${exchange.properties.pMoviCiasOrig})${exchange.properties.pMoviCiasOrig}#end",
+"pMoviOficina":"#if(${exchange.properties.pMoviOficina})${exchange.properties.pMoviOficina}#end",
+"pMoviNumero":"#if(${exchange.properties.pMoviNumero})${exchange.properties.pMoviNumero}#end",
+"pMoviOrpaVigencia":"#if(${exchange.properties.pMoviOrpaVigencia})${exchange.properties.pMoviOrpaVigencia}#end",
+"pMoviAuxiliar":"#if(${exchange.properties.pMoviAuxiliar})${exchange.properties.pMoviAuxiliar}#end",
+"pMoviFpag":"#if(${exchange.properties.pMoviFpag})${exchange.properties.pMoviFpag}#end",
+"pMoviDescripcion":"#if(${exchange.properties.pMoviDescripcion})${exchange.properties.pMoviDescripcion}#end",
+"pMoviUsuaCrea":"#if(${exchange.properties.pMoviUsuaCrea})${exchange.properties.pMoviUsuaCrea}#end",
+"pMoviFecha":"#if(${exchange.properties.pMoviFecha})${exchange.properties.pMoviFecha}#end",
+"pMoviCuenta":"#if(${exchange.properties.pMoviCuenta})${exchange.properties.pMoviCuenta}#end",
+"pMoviValor":"#if(${exchange.properties.pMoviValor})${exchange.properties.pMoviValor}#end"
+}
